@@ -79,9 +79,12 @@ export default function CalculatorPage() {
           <div className="flex items-center gap-3">
             {session.user?.image && (
               <Image
+                width={10}
+                height={10}
                 src={session.user.image}
                 alt="Profile"
                 className="w-10 h-10 rounded-full"
+                unoptimized
               />
             )}
             <div>
@@ -116,7 +119,7 @@ export default function CalculatorPage() {
                 value={num1}
                 onChange={(e) => setNum1(e.target.value)}
                 placeholder="Enter first number"
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-lg"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-lg text-black"
               />
             </div>
 
@@ -129,7 +132,7 @@ export default function CalculatorPage() {
                 value={num2}
                 onChange={(e) => setNum2(e.target.value)}
                 placeholder="Enter second number"
-                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-lg"
+                className="w-full px-4 py-3 border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-lg. text-black"
               />
             </div>
           </div>
