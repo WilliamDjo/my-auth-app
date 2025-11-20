@@ -1,36 +1,183 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# My Auth App
 
-## Getting Started
+A Next.js authentication application featuring Google and Facebook OAuth login with a protected calculator feature.
 
-First, run the development server:
+## Features
+
+- OAuth authentication with Google and Facebook
+- Protected routes with session management
+- Simple calculator accessible only to authenticated users
+- User profile display with avatar
+- Responsive design with Tailwind CSS
+- TypeScript for type safety
+
+## Tech Stack
+
+- **Framework:** Next.js 16 (App Router)
+- **UI Library:** React 19
+- **Authentication:** NextAuth.js v4
+- **Styling:** Tailwind CSS v4
+- **Language:** TypeScript
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- Node.js 20.x or higher
+- npm or yarn package manager
+- A Google Cloud Platform account (for Google OAuth)
+- A Facebook Developer account (for Facebook OAuth)
+
+## Installation
+
+1. Clone the repository:
+```bash
+git clone <repository-url>
+cd my-auth-app
+```
+
+2. Install dependencies:
+```bash
+npm install
+```
+
+3. Create a `.env.local` file in the root directory with the following variables:
+```env
+# NextAuth
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-secret-key-here
+
+# Google OAuth
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+
+# Facebook OAuth
+FACEBOOK_CLIENT_ID=your-facebook-app-id
+FACEBOOK_CLIENT_SECRET=your-facebook-app-secret
+```
+
+## OAuth Setup
+
+### Google OAuth
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Navigate to "APIs & Services" > "Credentials"
+4. Click "Create Credentials" > "OAuth client ID"
+5. Configure the OAuth consent screen if prompted
+6. Select "Web application" as the application type
+7. Add authorized redirect URIs:
+   - `http://localhost:3000/api/auth/callback/google` (for development)
+   - `https://yourdomain.com/api/auth/callback/google` (for production)
+8. Copy the Client ID and Client Secret to your `.env.local` file
+
+### Facebook OAuth
+
+1. Go to [Facebook Developers](https://developers.facebook.com/)
+2. Create a new app or select an existing one
+3. Add "Facebook Login" product to your app
+4. In "Facebook Login" settings, add valid OAuth redirect URIs:
+   - `http://localhost:3000/api/auth/callback/facebook` (for development)
+   - `https://yourdomain.com/api/auth/callback/facebook` (for production)
+5. Go to Settings > Basic to find your App ID and App Secret
+6. Copy the App ID and App Secret to your `.env.local` file
+
+### NextAuth Secret
+
+Generate a secure secret for NextAuth:
+```bash
+openssl rand -base64 32
+```
+Add the generated string to `NEXTAUTH_SECRET` in your `.env.local` file.
+
+## Running the Application
+
+### Development Mode
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Production Build
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+### Linting
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run lint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+my-auth-app/
+├── app/
+│   ├── api/
+│   │   └── auth/
+│   │       └── [...nextauth]/
+│   │           └── route.ts        # NextAuth configuration
+│   ├── calculator/
+│   │   └── page.tsx                # Protected calculator page
+│   ├── login/
+│   │   └── page.tsx                # Login page
+│   ├── layout.tsx                  # Root layout
+│   ├── page.tsx                    # Home page (redirects)
+│   └── providers.tsx               # SessionProvider wrapper
+├── public/                         # Static assets
+├── .env.local                      # Environment variables (not in repo)
+├── next.config.ts                  # Next.js configuration
+├── package.json                    # Dependencies
+├── tailwind.config.ts              # Tailwind configuration
+└── tsconfig.json                   # TypeScript configuration
+```
 
-## Deploy on Vercel
+## Usage
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Navigate to the application in your browser
+2. You will be redirected to the login page
+3. Choose to sign in with either Google or Facebook
+4. After successful authentication, you'll be redirected to the calculator
+5. Use the calculator to perform basic arithmetic operations
+6. Sign out using the button in the header
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Environment Variables
+
+| Variable | Description | Required |
+|----------|-------------|----------|
+| `NEXTAUTH_URL` | The URL of your application | Yes |
+| `NEXTAUTH_SECRET` | Secret key for NextAuth session encryption | Yes |
+| `GOOGLE_CLIENT_ID` | Google OAuth client ID | Yes |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret | Yes |
+| `FACEBOOK_CLIENT_ID` | Facebook app ID | Yes |
+| `FACEBOOK_CLIENT_SECRET` | Facebook app secret | Yes |
+
+## Troubleshooting
+
+### OAuth Redirect URI Mismatch
+Make sure the redirect URIs in your OAuth provider settings exactly match your application URLs.
+
+### Session Issues
+If you experience session problems, try:
+1. Clearing your browser cookies
+2. Regenerating your `NEXTAUTH_SECRET`
+3. Restarting the development server
+
+### Authentication Not Working
+Verify that:
+1. All environment variables are correctly set in `.env.local`
+2. Your OAuth apps are properly configured
+3. The redirect URIs match exactly (including http/https)
+
+## License
+
+This project is private and for demonstration purposes.
+
+## Contributing
+
+This is a private project. Please contact the repository owner for contribution guidelines.
