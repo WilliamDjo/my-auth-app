@@ -56,40 +56,6 @@ FACEBOOK_CLIENT_ID=your-facebook-app-id
 FACEBOOK_CLIENT_SECRET=your-facebook-app-secret
 ```
 
-## OAuth Setup
-
-### Google OAuth
-
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select an existing one
-3. Navigate to "APIs & Services" > "Credentials"
-4. Click "Create Credentials" > "OAuth client ID"
-5. Configure the OAuth consent screen if prompted
-6. Select "Web application" as the application type
-7. Add authorized redirect URIs:
-   - `http://localhost:3000/api/auth/callback/google` (for development)
-   - `https://yourdomain.com/api/auth/callback/google` (for production)
-8. Copy the Client ID and Client Secret to your `.env.local` file
-
-### Facebook OAuth
-
-1. Go to [Facebook Developers](https://developers.facebook.com/)
-2. Create a new app or select an existing one
-3. Add "Facebook Login" product to your app
-4. In "Facebook Login" settings, add valid OAuth redirect URIs:
-   - `http://localhost:3000/api/auth/callback/facebook` (for development)
-   - `https://yourdomain.com/api/auth/callback/facebook` (for production)
-5. Go to Settings > Basic to find your App ID and App Secret
-6. Copy the App ID and App Secret to your `.env.local` file
-
-### NextAuth Secret
-
-Generate a secure secret for NextAuth:
-```bash
-openssl rand -base64 32
-```
-Add the generated string to `NEXTAUTH_SECRET` in your `.env.local` file.
-
 ## Running the Application
 
 ### Development Mode
